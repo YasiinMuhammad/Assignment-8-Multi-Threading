@@ -18,17 +18,17 @@ class Assignment8Test {
 	void test() {
 		Assignment8 assignment8 = new Assignment8();
 
-		List<Integer> allNumbers = Collections.synchronizedList(new ArrayList<>());
+		List<Integer> allIntegers = Collections.synchronizedList(new ArrayList<>());
 // CachedThreadPool did not give me 1000000 numbers
-//		ExecutorService service = Executors.newCachedThreadPool();
-		ExecutorService service = Executors.newFixedThreadPool(1000000);
+		ExecutorService service = Executors.newCachedThreadPool();
+//		ExecutorService service = Executors.newFixedThreadPool(1000000);
 
 		List<CompletableFuture<Void>> task = new ArrayList<>(1000);
 
 		for (int i = 0; i < 1000; i++) {
 
 			task.add(CompletableFuture.supplyAsync(() -> assignment8.getNumbers(), service)
-					.thenAccept(numbers -> allNumbers.addAll(numbers)));
+					.thenAccept(numbers -> allIntegers.addAll(numbers)));
 		}
 		while (task.stream().filter(CompletableFuture::isDone).count() < 1000) {
 			try {
@@ -37,9 +37,9 @@ class Assignment8Test {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println("Done fetching all numbers " + allNumbers.size());
+			System.out.println("Done fetching all Integers " + allIntegers.size());
 
-			Map<Integer, Long> map = allNumbers.stream()
+			Map<Integer, Long> map = allIntegers.stream()
 					.collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
 			System.out.println(map);
 		}
