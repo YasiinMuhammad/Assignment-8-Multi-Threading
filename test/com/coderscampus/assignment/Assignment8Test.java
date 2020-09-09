@@ -23,7 +23,7 @@ class Assignment8Test {
 		ExecutorService service = Executors.newCachedThreadPool();
 //		ExecutorService service = Executors.newFixedThreadPool(1000000);
 
-		List<CompletableFuture<Void>> task = new ArrayList<>(1000);
+		List<CompletableFuture<Void>> task = new ArrayList<>();
 
 		for (int i = 0; i < 1000; i++) {
 
